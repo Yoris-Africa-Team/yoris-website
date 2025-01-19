@@ -48,7 +48,7 @@ const Header: React.FC = () => {
         <Grid item xs={1} sm={2} md={2}>
           <Box sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
             <IconButton>
-              <MenuIcon sx={{ color: "#C3AD60" }} />
+              <MenuIcon sx={{ color: "primary.main" }} />
             </IconButton>
           </Box>
         </Grid>
@@ -81,7 +81,7 @@ const Header: React.FC = () => {
                 height: "40px", // Adjust height of the button
               }}
             >
-              <SearchIcon sx={{ color: "#C3AD60" }} />
+              <SearchIcon sx={{ color: "primary.main" }} />
             </IconButton>
             <Button
               sx={{
@@ -114,7 +114,7 @@ const Header: React.FC = () => {
       sx={{
         width: "88%",
         padding: "10px 5%",
-        position: "absolute",
+        position: "fixed",
         zIndex: "9999",
       }}
     >
@@ -174,10 +174,10 @@ const Header: React.FC = () => {
           alignItems="center"
         >
           <IconButton>
-            <PublicIcon sx={{ color: "#C3AD60" }} />
+            <PublicIcon sx={{ color: "primary.main" }} />
           </IconButton>
           <IconButton>
-            <SearchIcon sx={{ color: "#C3AD60" }} />
+            <SearchIcon sx={{ color: "primary.main" }} />
           </IconButton>
         </Grid>
         <Grid
