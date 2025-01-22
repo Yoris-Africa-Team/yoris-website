@@ -11,6 +11,12 @@ import {
 } from "@mui/material";
 import "../styles/Home.css";
 import Header from "../components/navigations/Navbar";
+import CarouselComponent from "../components/carousel/Carousel.tsx";
+import FAQs from "../components/Faqs";
+import RecentTweets from "../components/tweets/RecentTweets";
+import RecentBlogs from "../components/blog/RecentBlogs";
+import { getTweets } from "../features/getTweets";
+import { getBlogs } from "../features/getBlogs";
 import AppDownloadBtn from "../components/Buttons/AppDownloadBtn";
 import bottomImg from "../assets/images/bottom_img.png";
 import playstoreIcon from "../assets/images/ion_logo-google-playstore.png";
@@ -125,7 +131,7 @@ const Home: React.FC = () => {
       <Box
         sx={{
           position: "relative",
-          marginTop: "-30px",
+          marginTop: "-100px",
           width: "100%",
           display: "flex",
           alignItems: "center",
@@ -167,6 +173,78 @@ const Home: React.FC = () => {
             />
           </Grid>
         </Grid>
+      </Box>
+      <Box
+        sx={{
+          position: "relative",
+          marginTop: "70px",
+          width: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <CarouselComponent />
+      </Box>
+      <RecentBlogs blogDetails={getBlogs()} />
+      <Box
+        style={{
+          width: "100%",
+          borderTop: "2px dashed #6b38a5",
+          borderBottom: "2px dashed #6b38a5",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            textAlign: "start",
+            marginTop: "2rem",
+            width: "100%",
+          }}
+          id="recent-tweets"
+        >
+          <Typography
+            variant="h4"
+            style={{
+              width: "100%",
+              maxWidth: "112rem",
+              paddingLeft: "1.25rem",
+              paddingRight: "1.25rem",
+              color: "primary.yorisWhite",
+            }}
+          >
+            Recent Tweets
+          </Typography>
+        </div>
+        <RecentTweets tweetDetails={getTweets(2)} />
+      </Box>
+
+      <Box
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          textAlign: "left",
+          paddingBlock: "2rem", // py-8
+          backgroundColor: "#15130A",
+        }}
+        id="faqs"
+      >
+        <Typography
+          variant="h4"
+          style={{
+            padding: "1rem", // px-5
+            color: "primary.yorisWhite",
+            fontFamily: "Sarala",
+          }}
+        >
+          FAQs
+        </Typography>
+        <Box style={{ width: "100%", maxWidth: "72rem", overflowX: "hidden" }}>
+          <FAQs />
+        </Box>{" "}
+        {/* max-w-6xl (6 * 128px / 16px per rem = 48rem. I have used 72 rem for better responsiveness) */}
       </Box>
     </>
   );

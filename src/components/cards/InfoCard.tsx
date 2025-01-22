@@ -63,7 +63,7 @@ const InfoCard: React.FC<InfoCardProps> = ({ title, description, image }) => {
             sx={{
               fontWeight: 400,
               fontSize: { xs: "10px", sm: "14px", md: "16px" },
-              lineHeight: { xs: "15px", sm: "20px", md: "25px" },
+              lineHeight: { xs: "15px", sm: "20px", md: "22px" },
               color: "#E6E6E6",
             }}
           >
@@ -111,7 +111,7 @@ const InfoCard: React.FC<InfoCardProps> = ({ title, description, image }) => {
           position: "absolute",
           left: 0,
           right: 0,
-          top: "63.99%",
+          top: "66.99%",
           bottom: 0,
           display: "flex",
           alignItems: "center",

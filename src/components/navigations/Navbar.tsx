@@ -6,22 +6,47 @@ import MenuIcon from "@mui/icons-material/Menu";
 
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
+interface MenuItem {
+  id: number;
+  name: string;
+  link: string;
+}
+
 const Header: React.FC = () => {
   const [isMobileView, setIsMobileView] = useState<boolean>(false);
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [menuBtnItems, setMenuBtnItems] = useState<MenuItem[]>([
+    {
+      id: 1,
+      name: "Vendors",
+      link: "/vendors",
+    },
+    {
+      id: 2,
+      name: "Riders",
+      link: "/riders",
+    },
+  ]);
 
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+  const [selectedMenuBtnItem, setSelectedMenuBtnItem] = useState<MenuItem>({
+    id: 0,
+    name: "Customers",
+    link: "/",
+  });
 
-  const handleClose = () => {
-    setAnchorEl(null);
+  const [showMenuButton, setShowMenuButton] = useState<boolean>(false);
+
+  const toggleMenuBtnItem = (id: number) => {
+    const selectedItem = menuBtnItems.find((item) => item.id === id);
+    if (selectedItem) {
+      setSelectedMenuBtnItem(selectedItem);
+    }
+    setShowMenuButton(false);
   };
 
   // Listen for screen width changes
   useEffect(() => {
     const handleResize = () => {
-      setIsMobileView(window.innerWidth <= 910);
+      setIsMobileView(window.innerWidth <= 970);
     };
     handleResize(); // Initial check
     window.addEventListener("resize", handleResize);
@@ -32,7 +57,7 @@ const Header: React.FC = () => {
     // Mobile Layout
     <Box
       sx={{
-        width: "95%",
+        width: "94%",
         padding: "10px",
         position: "absolute",
         zIndex: "9999",
@@ -85,8 +110,8 @@ const Header: React.FC = () => {
             </IconButton>
             <Button
               sx={{
-                width: "100px",
-                height: "48px",
+                width: "90px",
+                height: "38px",
                 backgroundColor: "#E1C562",
                 borderRadius: "34.5px",
                 textTransform: "none",
@@ -97,7 +122,7 @@ const Header: React.FC = () => {
                 sx={{
                   fontFamily: "'Sarala', sans-serif",
                   fontWeight: 700,
-                  fontSize: "10px",
+                  fontSize: "8px",
                   color: "#FFFFFF",
                 }}
               >
@@ -186,7 +211,7 @@ const Header: React.FC = () => {
           sm={4}
           md={2}
           container
-          justifyContent="center"
+          justifyContent="end"
           alignItems="center"
         >
           <Button
@@ -214,48 +239,67 @@ const Header: React.FC = () => {
       </Grid>
       {/* Dropdown Button */}
       <Box
-        sx={{ marginTop: "10px", display: "flex", justifyContent: "flex-end" }}
+        sx={{
+          width: "100%",
+          marginLeft: "-20px",
+          justifyContent: "flex-end",
+          paddingTop: "16px",
+        }}
       >
-        <Button
+        <Box
           sx={{
-            backgroundColor: "#FFFFFF",
-            borderRadius: "50px",
             display: "flex",
-            alignItems: "center",
-            padding: "10px 15px",
-            gap: "8px",
-            boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+            flexDirection: "column",
+            alignItems: "flex-end",
+            gap: "12px",
           }}
-          onClick={handleClick}
-          endIcon={<ArrowDropDownIcon sx={{ color: "#231F11" }} />}
+          onMouseLeave={() => setShowMenuButton(false)}
+          onMouseEnter={() => setShowMenuButton(true)}
         >
-          <Typography
+          <Button
+            variant="outlined"
+            size="large"
             sx={{
-              fontFamily: "'Sarala', sans-serif",
-              fontWeight: 700,
-              fontSize: "14px",
-              color: "#231F11",
+              color: "#15130A",
+              backgroundColor: "#FFFFFF",
+              borderRadius: "20px",
+              textTransform: "none",
+              fontWeight: 600,
+              boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+              padding: "10px 15px",
+              "&:hover": {
+                color: "#FFFFFF",
+                backgroundColor: "#15130A",
+              },
             }}
           >
-            Customers
-          </Typography>
-        </Button>
-
-        <Menu
-          anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-        >
-          {["Option 1", "Option 2", "Option 3"].map((option, index) => (
-            <Button
-              key={index}
-              sx={{ padding: "10px 20px", width: "100%" }}
-              onClick={handleClose}
-            >
-              {option}
-            </Button>
-          ))}
-        </Menu>
+            {selectedMenuBtnItem.name} <ArrowDropDownIcon />
+          </Button>
+          {showMenuButton &&
+            menuBtnItems.map((item) => (
+              <Button
+                variant="outlined"
+                size="large"
+                key={item.id}
+                onClick={() => toggleMenuBtnItem(item.id)}
+                sx={{
+                  color: "#15130A",
+                  backgroundColor: "#FFFFFF",
+                  borderRadius: "20px",
+                  textTransform: "none",
+                  fontWeight: 600,
+                  boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+                  padding: "10px 15px",
+                  "&:hover": {
+                    color: "#FFFFFF",
+                    backgroundColor: "#15130A",
+                  },
+                }}
+              >
+                {item.name}
+              </Button>
+            ))}
+        </Box>
       </Box>
     </Box>
   );

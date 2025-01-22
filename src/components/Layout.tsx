@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
-import { Outlet, useLocation } from 'react-router-dom';
-import { Box } from '@mui/material';
-// import Footer from './Footer';
+import React, { useEffect } from "react";
+import { Outlet, useLocation } from "react-router-dom";
+import { Box } from "@mui/material";
+import Footer from "./Footer";
 // import SideBar from './navigations/SideBar';
-import { navigation } from '../features/navigation';
+import { navigation } from "../features/navigation";
 
 const Layout = () => {
   const currentPath = useLocation().pathname;
@@ -14,20 +14,21 @@ const Layout = () => {
 
   return (
     <Box
-      className='flex flex-col overflow-auto'
+      className="flex flex-col overflow-auto"
       sx={{
-        backgroundColor: 'primary.body',
-        height: '100vh', color: 'primary.main',
+        backgroundColor: "primary.body",
+        height: "100vh",
+        color: "primary.main",
         display: "flex",
-  flexDirection: "column", 
-  overflow: "auto",
+        flexDirection: "column",
+        overflowX: "hidden",
       }}
     >
       {/* <SideBar /> */}
       <Outlet />
-      {/* <Footer /> */}
+      <Footer />
     </Box>
   );
-}
+};
 
 export default Layout;
