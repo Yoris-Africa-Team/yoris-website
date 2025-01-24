@@ -3,6 +3,7 @@ import { useRoutes } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
+import Company from "./pages/Company";
 
 const theme = createTheme({
   palette: {
@@ -48,6 +49,7 @@ const router = [
       // on the default route i.e. '/'
       // { index: true, element: <ChatPane /> },
       { path: "/", element: <Home /> },
+      { path: "/company", element: <Company /> },
     ],
   },
 ];

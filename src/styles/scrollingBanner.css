@@ -1,63 +1,63 @@
 .App {
-    font-family: sans-serif;
-    text-align: center;
+  font-family: sans-serif;
+  text-align: center;
 }
 
 .img {
-    max-width: 300px;
-    height: 15rem;
-    object-fit: cover;
+  max-width: 300px;
+  height: 15rem;
+  object-fit: cover;
 }
 
 .img:last-of-type {
-    padding-left: 0;
+  padding-left: 0;
 }
 
 .content {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-    height: 27rem;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  height: 27rem;
 }
 
 .inner {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-    height: 15rem;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  height: 15rem;
 }
 
 .wrapper {
-    position: absolute;
-    display: flex;
+  position: absolute;
+  display: flex;
 }
 
 .section-forward {
-    display: flex;
-    animation: swipeToRight var(--speed) linear infinite forwards;
+  display: flex;
+  animation: swipeToRight var(--speed) linear infinite forwards;
 }
 
 .section-backward {
-    display: flex;
-    animation: swipeToLeft var(--speed) linear infinite backwards;
+  display: flex;
+  animation: swipeToLeft var(--speed) linear infinite backwards;
 }
 
 @keyframes swipeToLeft {
-    0% {
-        transform: translate(0);
-    }
+  0% {
+    transform: translate(0);
+  }
 
-    100% {
-        transform: translate(-100%);
-    }
+  100% {
+    transform: translate(-100%);
+  }
 }
 
 @keyframes swipeToRight {
-    0% {
-        transform: translate(-100%);
-    }
+  0% {
+    transform: translate(-100%);
+  }
 
-    100% {
-        transform: translate(0);
-    }
+  100% {
+    transform: translate(0);
+  }
 }

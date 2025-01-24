@@ -103,7 +103,7 @@ const Footer = () => {
             <Box sx={{ position: "relative", width: "100%" }}>
               <input
                 style={{
-                  width: "90%",
+                  width: "100%",
                   padding: "20px",
                   borderRadius: "8px",
                   backgroundColor: "black",

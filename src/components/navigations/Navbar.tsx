@@ -5,6 +5,7 @@ import PublicIcon from "@mui/icons-material/Public";
 import MenuIcon from "@mui/icons-material/Menu";
 
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import { Link } from "react-router-dom";
 
 interface MenuItem {
   id: number;
@@ -59,7 +60,8 @@ const Header: React.FC = () => {
       sx={{
         width: "94%",
         padding: "10px",
-        position: "absolute",
+        position: "fixed",
+        top: 0,
         zIndex: "9999",
       }}
     >
@@ -137,9 +139,10 @@ const Header: React.FC = () => {
     // Desktop Layout
     <Box
       sx={{
-        width: "88%",
+        width: "100%",
         padding: "10px 5%",
         position: "fixed",
+        top: 0,
         zIndex: "9999",
       }}
     >
@@ -161,19 +164,20 @@ const Header: React.FC = () => {
           >
             {["Company", "Blog", "Contacts", "FAQs", "Donate"].map(
               (text, index) => (
-                <Typography
+                <Link
+                  to={`/${text.toLowerCase()}`}
                   key={index}
-                  sx={{
+                  style={{
                     fontFamily: "'Sarala', sans-serif",
                     fontWeight: 700,
+                    textDecoration: "none",
                     fontSize: "14px",
                     color: "#231F11",
                     cursor: "pointer",
-                    "&:hover": { color: "#555555" },
                   }}
                 >
                   {text}
-                </Typography>
+                </Link>
               )
             )}
           </Box>
@@ -241,9 +245,9 @@ const Header: React.FC = () => {
       <Box
         sx={{
           width: "100%",
-          marginLeft: "-20px",
+          marginLeft: "-10px",
           justifyContent: "flex-end",
-          paddingTop: "16px",
+          paddingTop: "2px",
         }}
       >
         <Box
@@ -251,12 +255,12 @@ const Header: React.FC = () => {
             display: "flex",
             flexDirection: "column",
             alignItems: "flex-end",
-            gap: "12px",
+            gap: "8px",
           }}
-          onMouseLeave={() => setShowMenuButton(false)}
-          onMouseEnter={() => setShowMenuButton(true)}
         >
           <Button
+            onMouseLeave={() => setShowMenuButton(false)}
+            onMouseEnter={() => setShowMenuButton(true)}
             variant="outlined"
             size="large"
             sx={{
