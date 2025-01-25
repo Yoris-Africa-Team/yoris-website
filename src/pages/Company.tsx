@@ -147,21 +147,24 @@ const Company: React.FC = () => {
       <Box className="flex flex-col items-center">
         {/* PLACE UNDER HERE */}
         <div className="l-shaped-container">
-          <div className="horizontal-rectangle"></div>
+          <div className="horizontal-rectangle">
+            <div className="msg-box">
+              <p className="text-white text-my-sm">
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                Dolorum quasi incidunt minus ducimus enim in, temporibus animi
+                placeat cum. Amet esse consectetur dolor cumque illum iure autem
+                sapiente pariatur possimus.
+              </p>
+            </div>
+          </div>
           <div className="vertical-square">
             <div className="founder-box">
-              <Typography className="text-white text-xs">
-                Founder's Story
-              </Typography>
+              <p className="text-white text-my-sm">Founder's Story</p>
             </div>
             <div className="founder-img"></div>
             <div className="founder-box-var flex flex-col items-center">
-              <Typography className="text-white text-sm">
-                Godwin Yoris
-              </Typography>
-              <Typography className="text-[#C3AD60] text-md">
-                CEO / CO-FOUNDER
-              </Typography>
+              <p className="text-white text-my-sm">Godwin Yoris</p>
+              <p className="text-[#C3AD60] text-my-md">CEO / CO-FOUNDER</p>
             </div>
           </div>
         </div>
