@@ -50,7 +50,7 @@ const RecentBlogs: React.FC = () => {
 
       {/* Scrolling Banner */}
       <Box className="w-full flex flex-col pt-8 pb-16 h-auto gap-8">
-        <ScrollingBlogBanner images={images} speed={60000} />
+        <ScrollingBlogBanner />
       </Box>
     </Box>
   );

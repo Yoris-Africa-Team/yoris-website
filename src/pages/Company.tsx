@@ -146,28 +146,85 @@ const Company: React.FC = () => {
       </Box>
       <Box className="flex flex-col items-center">
         {/* PLACE UNDER HERE */}
-        <div className="l-shaped-container">
-          <div className="horizontal-rectangle">
-            <div className="msg-box">
-              <p className="text-white text-my-sm">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                Dolorum quasi incidunt minus ducimus enim in, temporibus animi
-                placeat cum. Amet esse consectetur dolor cumque illum iure autem
-                sapiente pariatur possimus.
-              </p>
-            </div>
-          </div>
-          <div className="vertical-square">
-            <div className="founder-box">
-              <p className="text-white text-my-sm">Founder's Story</p>
-            </div>
-            <div className="founder-img"></div>
-            <div className="founder-box-var flex flex-col items-center">
-              <p className="text-white text-my-sm">Godwin Yoris</p>
-              <p className="text-[#C3AD60] text-my-md">CEO / CO-FOUNDER</p>
-            </div>
-          </div>
-        </div>
+        <Box
+          sx={{ borderColor: "primary.main" }}
+          className="h-full w-full max-w-[90%] md:max-w-6xl overflow-hidden -mt-20 md:-mt-44 z-100 sticky flex flex-col lg:flex-row divide-[#E1C562] divide-y-2 lg:divide-y-0 lg:divide-x-2 border-[3px] rounded-2xl shadow shadow-[#C3AD60]"
+        >
+          <Box className="w-full h-auto lg:w-2/5 p-3 md:p-5 lg:p-8 flex flex-col items-center justify-start">
+            <Box
+              className="flex items-center justify-center py-3 w-full rounded-lg max-w-[300px] md:max-w-[500px] mb-1 font-bold text-center uppercase"
+              sx={{ backgroundColor: "black", color: "primary.yorisWhite" }}
+            >
+              <Radio checked sx={{ color: "primary-main" }} />
+              Founder's Story
+            </Box>
+            <Box className="rounded-xl max-h-[390px] md:max-h-[550px] w-full max-w-[300px] md:max-w-[450px] overflow-hidden">
+              <img
+                className="h-full w-full object-fit"
+                src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=600"
+                alt=""
+              />
+            </Box>
+            <Box className="py-2 text-center">
+              <Typography
+                sx={{ color: "primary.yorisWhite", fontWeight: "400" }}
+              >
+                Godwin Mbanefo
+              </Typography>
+              <Typography sx={{ fontWeight: "bold" }}>
+                CEO / CO-FOUNDER
+              </Typography>
+            </Box>
+          </Box>
+          <Box
+            className="flex flex-col gap-1 p-5 md:p-8 w-full h-96 md:h-auto overflow-y-auto lg:w-3/5 text-justify"
+            sx={{
+              backgroundColor: "secondary.main",
+              color: "primary.yorisWhite",
+            }}
+          >
+            <Typography>
+              In 2019, running a thriving international logistics company that
+              ships from china to Nigeria, i had a bad news which involved my
+              dad undergoing a surgery which lead him to a partial stroke so in
+              the bid to be supportive to the family i left china to Nigeria
+              which left my business in on total dismay due to the covid-19
+              pandemic which caused a global lockdown and got me stuck in
+              Nigeria.
+            </Typography>
+            <Typography>
+              This lead me to starting out a delivery company which was my
+              initial plan but this time with the motive to understand the
+              relationships between businesses and consumers and it felt
+              miserable and difficult for me having access to the most basic
+              commodities from even the closest small or even medium scale brand
+              around my location online. This hence put me on a mission to find
+              out how brand accessibility was not only a problem i experienced
+              but also a problem experienced by millions of Nigerians.
+            </Typography>
+            <Typography>
+              We then started to calculate and understand the cost of online
+              presences in Nigeria and in Africa, which then brought us to the
+              understanding of the high and unsustainable cost of online
+              presence of African businesses as the cost or websites and apps
+              where not sustainable for small and medium scale businesses
+              leaving about 40% of the African population depending on social
+              media for business and about 30% completely offline.
+            </Typography>
+            <Typography>
+              This lead i and my team to building what we described as the first
+              ever “AFRICAN APP STORE” which embodied not just brand
+              accessibility but also brand identity as we automated the
+              development of “Mini mobile apps and MINI - web apps” for
+              businesses and affordable delivery fares.
+            </Typography>
+            <Typography>
+              Our offical software launch to the public was in febuary 2023 and
+              we have since then been advocates for change to the African
+              continent.
+            </Typography>
+          </Box>
+        </Box>
 
         {/* Core values */}
         <CoreValues />
@@ -237,7 +294,9 @@ const Company: React.FC = () => {
           {/* Team Members */}
           <Box className="w-full flex flex-col px-3 pt-16">
             <Box>
-              <Typography variant="h3">People</Typography>
+              <Typography variant="h3" className="p-3 text-white">
+                People
+              </Typography>
             </Box>
             <Grid container spacing={3}>
               {selectedTeamMembers.map((member) => (

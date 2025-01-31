@@ -4,6 +4,12 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import Company from "./pages/Company";
+import Contact from "./pages/Contact";
+import Donate from "./pages/Donate";
+import Vendors from "./pages/Vendors";
+import Riders from "./pages/Riders";
+import SideBar from "./components/navigations/SideBar";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 
 const theme = createTheme({
   palette: {
@@ -39,7 +45,6 @@ const theme = createTheme({
     fontFamily: ["Sarala"].join(","),
   },
 });
-
 const router = [
   {
     path: "/",
@@ -50,12 +55,23 @@ const router = [
       // { index: true, element: <ChatPane /> },
       { path: "/", element: <Home /> },
       { path: "/company", element: <Company /> },
+      { path: "/contact-us", element: <Contact /> },
+      { path: "/donate", element: <Donate /> },
+      { path: "/vendors", element: <Vendors /> },
+      { path: "/riders", element: <Riders /> },
+      { path: "/privacy-policy", element: <PrivacyPolicy /> },
+      // { path: '/home', element: home },
     ],
   },
 ];
 
 function App() {
-  return <ThemeProvider theme={theme}>{useRoutes(router)}</ThemeProvider>;
+  return (
+    <ThemeProvider theme={theme}>
+      <SideBar />
+      {useRoutes(router)}
+    </ThemeProvider>
+  );
 }
 
 export default App;

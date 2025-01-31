@@ -3,9 +3,11 @@ import { Button, Box, Typography, IconButton, Grid, Menu } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import PublicIcon from "@mui/icons-material/Public";
 import MenuIcon from "@mui/icons-material/Menu";
-
+import { useDispatch, useSelector } from "react-redux";
+import { toggleSideBar } from "../../features/sideBarSlice";
+import { RootState } from "../../app/store";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 interface MenuItem {
   id: number;
@@ -15,26 +17,35 @@ interface MenuItem {
 
 const Header: React.FC = () => {
   const [isMobileView, setIsMobileView] = useState<boolean>(false);
-  const [menuBtnItems, setMenuBtnItems] = useState<MenuItem[]>([
-    {
-      id: 1,
-      name: "Vendors",
-      link: "/vendors",
-    },
-    {
-      id: 2,
-      name: "Riders",
-      link: "/riders",
-    },
-  ]);
+  const allMenuItems: MenuItem[] = [
+    { id: 1, name: "Vendors", link: "/vendors" },
+    { id: 2, name: "Riders", link: "/riders" },
+    { id: 3, name: "Customers", link: "/" }, // Including "Customers" for completeness
+  ];
 
-  const [selectedMenuBtnItem, setSelectedMenuBtnItem] = useState<MenuItem>({
-    id: 0,
-    name: "Customers",
-    link: "/",
-  });
+  const location = useLocation();
+
+  const [menuBtnItems, setMenuBtnItems] = useState<MenuItem[]>(allMenuItems);
+  const [selectedMenuBtnItem, setSelectedMenuBtnItem] =
+    useState<MenuItem | null>(null);
+
+  useEffect(() => {
+    // Find the current item
+    const currentItem = allMenuItems.find(
+      (item) => item.link === location.pathname
+    );
+
+    if (currentItem) {
+      setSelectedMenuBtnItem(currentItem);
+      // Set menu items excluding the selected one
+      setMenuBtnItems(
+        allMenuItems.filter((item) => item.link !== currentItem.link)
+      );
+    }
+  }, [location.pathname]);
 
   const [showMenuButton, setShowMenuButton] = useState<boolean>(false);
+  const dispatch = useDispatch();
 
   const toggleMenuBtnItem = (id: number) => {
     const selectedItem = menuBtnItems.find((item) => item.id === id);
@@ -74,7 +85,7 @@ const Header: React.FC = () => {
         {/* Left Section */}
         <Grid item xs={1} sm={2} md={2}>
           <Box sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <IconButton>
+            <IconButton onClick={() => dispatch(toggleSideBar())}>
               <MenuIcon sx={{ color: "primary.main" }} />
             </IconButton>
           </Box>
@@ -82,13 +93,15 @@ const Header: React.FC = () => {
 
         {/* Middle Section */}
         <Grid item xs={6} sm={6} md={6} container justifyContent="center">
-          <Box sx={{ display: "flex", justifyContent: "center" }}>
-            <img
-              src="https://s3-alpha-sig.figma.com/img/c74f/b5d8/3d8b69fc2e12f78d672cb14e860c1582?Expires=1737936000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=bajulG~Cn0oMP5S5BJSin~ZC5VTZKFyAfvAVo6bOiiLPJ7-USRWFtbmflhXhK0tT-5kHZpa8gtPRh2e057NDUa3XhnE1CfAhSkwKDHFymOPp857Vygh0PEeTcnO6W3m8awdSX6iw8EGp3ltzI1mm5Z-bbzr3xJR9RYyqZaOfuvs9ovR5IAVKrsi~xcLQgZhNh2RiXiHJeP5Uyg222WT5KpkRgBdoNWW-n-iofxg1FqYp8~KC~VpNc~wfJ8mzFdZ~5J1R~mkIzQG3Nm5ul-~Ha05JONvoJco2MkwSXYh6wC6TOTUxYchrOfwYzEDCeytIruUP0FmbONEWbN9XVI6P~A__"
-              alt="Logo"
-              style={{ height: "50px" }}
-            />
-          </Box>
+          <Link to="/">
+            <Box sx={{ display: "flex", justifyContent: "center" }}>
+              <img
+                src="https://s3-alpha-sig.figma.com/img/c74f/b5d8/3d8b69fc2e12f78d672cb14e860c1582?Expires=1737936000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=bajulG~Cn0oMP5S5BJSin~ZC5VTZKFyAfvAVo6bOiiLPJ7-USRWFtbmflhXhK0tT-5kHZpa8gtPRh2e057NDUa3XhnE1CfAhSkwKDHFymOPp857Vygh0PEeTcnO6W3m8awdSX6iw8EGp3ltzI1mm5Z-bbzr3xJR9RYyqZaOfuvs9ovR5IAVKrsi~xcLQgZhNh2RiXiHJeP5Uyg222WT5KpkRgBdoNWW-n-iofxg1FqYp8~KC~VpNc~wfJ8mzFdZ~5J1R~mkIzQG3Nm5ul-~Ha05JONvoJco2MkwSXYh6wC6TOTUxYchrOfwYzEDCeytIruUP0FmbONEWbN9XVI6P~A__"
+                alt="Logo"
+                style={{ height: "50px" }}
+              />
+            </Box>
+          </Link>
         </Grid>
 
         {/* Right Section */}
@@ -163,22 +176,33 @@ const Header: React.FC = () => {
             }}
           >
             {["Company", "Blog", "Contacts", "FAQs", "Donate"].map(
-              (text, index) => (
-                <Link
-                  to={`/${text.toLowerCase()}`}
-                  key={index}
-                  style={{
-                    fontFamily: "'Sarala', sans-serif",
-                    fontWeight: 700,
-                    textDecoration: "none",
-                    fontSize: "14px",
-                    color: "#231F11",
-                    cursor: "pointer",
-                  }}
-                >
-                  {text}
-                </Link>
-              )
+              (text, index) => {
+                // Define route mapping for specific items
+                const routeMap: { [key: string]: string } = {
+                  Company: "/company",
+                  Blog: "/blogs",
+                  Contacts: "/contact-us",
+                  FAQs: "/#faqs",
+                  Donate: "/donate",
+                };
+
+                return (
+                  <Link
+                    to={routeMap[text] || `/${text.toLowerCase()}`} // Default to lowercase path if not in the map
+                    key={index}
+                    style={{
+                      fontFamily: "'Sarala', sans-serif",
+                      fontWeight: 700,
+                      textDecoration: "none",
+                      fontSize: "14px",
+                      color: "#231F11",
+                      cursor: "pointer",
+                    }}
+                  >
+                    {text}
+                  </Link>
+                );
+              }
             )}
           </Box>
         </Grid>
@@ -257,9 +281,9 @@ const Header: React.FC = () => {
             alignItems: "flex-end",
             gap: "8px",
           }}
+          onMouseLeave={() => setShowMenuButton(false)}
         >
           <Button
-            onMouseLeave={() => setShowMenuButton(false)}
             onMouseEnter={() => setShowMenuButton(true)}
             variant="outlined"
             size="large"
@@ -277,31 +301,37 @@ const Header: React.FC = () => {
               },
             }}
           >
-            {selectedMenuBtnItem.name} <ArrowDropDownIcon />
+            {selectedMenuBtnItem ? selectedMenuBtnItem.name : "Select"}{" "}
+            <ArrowDropDownIcon />
           </Button>
           {showMenuButton &&
             menuBtnItems.map((item) => (
-              <Button
-                variant="outlined"
-                size="large"
+              <Link
+                to={item.link}
                 key={item.id}
-                onClick={() => toggleMenuBtnItem(item.id)}
-                sx={{
-                  color: "#15130A",
-                  backgroundColor: "#FFFFFF",
-                  borderRadius: "20px",
-                  textTransform: "none",
-                  fontWeight: 600,
-                  boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
-                  padding: "10px 15px",
-                  "&:hover": {
-                    color: "#FFFFFF",
-                    backgroundColor: "#15130A",
-                  },
-                }}
+                style={{ textDecoration: "none" }}
               >
-                {item.name}
-              </Button>
+                <Button
+                  variant="outlined"
+                  size="large"
+                  onClick={() => toggleMenuBtnItem(item.id)}
+                  sx={{
+                    color: "#15130A",
+                    backgroundColor: "#FFFFFF",
+                    borderRadius: "20px",
+                    textTransform: "none",
+                    fontWeight: 600,
+                    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+                    padding: "10px 15px",
+                    "&:hover": {
+                      color: "#FFFFFF",
+                      backgroundColor: "#15130A",
+                    },
+                  }}
+                >
+                  {item.name}
+                </Button>
+              </Link>
             ))}
         </Box>
       </Box>

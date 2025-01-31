@@ -3,7 +3,7 @@ import Button from "@mui/material/Button";
 
 interface AppDownloadBtnProps {
   text: string;
-  icon: React.ReactNode; // Icon or image as a prop
+  icon: React.ReactNode | string; // Accepts components & images
   style?: React.CSSProperties; // Optional style prop for additional customization
 }
 
@@ -33,15 +33,11 @@ const AppDownloadBtn: React.FC<AppDownloadBtnProps> = ({
         },
       }}
     >
-      {icon && (
-        <span
-          style={{
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          {icon}
-        </span>
+      {/* Conditional rendering for icon */}
+      {typeof icon === "string" ? (
+        <img src={icon} alt={text} className="w-6 h-6 mr-3" />
+      ) : (
+        icon
       )}
       {text}
     </Button>

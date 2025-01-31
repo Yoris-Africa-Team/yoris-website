@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Card,
@@ -23,7 +23,26 @@ import playstoreIcon from "../assets/images/ion_logo-google-playstore.png";
 import appstoreIcon from "../assets/images/ph_app-store-logo-bold.png";
 import iphoneImg from "../assets/images/iPhone_13.png";
 import InfoCard from "../components/cards/InfoCard";
+import introBg from "../assets/images/intro_bg.svg";
+
 const Home: React.FC = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.matchMedia("(max-width: 768px)").matches);
+    };
+
+    // Initial check
+    handleResize();
+
+    // Add event listener for window resize
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <>
       <Header />
@@ -35,7 +54,7 @@ const Home: React.FC = () => {
         }}
       >
         <img
-          src="https://s3-alpha-sig.figma.com/img/5add/8360/0a99fcbba6431d5e129f4842af928894?Expires=1737936000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=g8eiX1YCAnxrWmuFhX-IHkTwEDq0QaTdSCEz-CYqmeY7S1B1JyFmUXgbHJRsY6O4zo~txoddRsicrgAVr-GHXHwfVWZ-bSHHZlW06q6K-Dw~6EeLM1NOO9qmx3RSq55X2jQld8zE~975SC-CHflic7-vq7doOam-LhIHa1z6hCpM6D2psr4CUQrpEJ00AEs-wmDulOXgR81u42hrYgnYChcYClMKPwCkf5oHrL-Poae9-SkqlBcEm1mv5bBhE2-sBeHM3bb181CpTXbYGhul4RooMUdNhQRBzjQEK0xDZ92BAm8-okmdwtc5EnUGrh9ymzrIDmzaMaaQped~E6WNpw__"
+          src={introBg}
           alt="gif"
           style={{
             width: "100%",
@@ -48,7 +67,7 @@ const Home: React.FC = () => {
           alt="gif"
           style={{
             width: "100%",
-            marginTop: "-80px",
+            marginTop: isMobile ? "-20px" : "-50px",
             objectFit: "cover",
           }}
         />
