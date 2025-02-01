@@ -1,0 +1,29 @@
+.responsive-icon {
+  width: 25px;
+}
+.mockup-img {
+  width: 700px;
+  margin-left: -200px;
+}
+
+@media (max-width: 600px) {
+  .responsive-icon {
+    width: 20px;
+  }
+
+  .mockup-img {
+    width: 500px;
+    margin-left: -100px;
+  }
+}
+
+@media (max-width: 960px) {
+  .responsive-icon {
+    width: 15px;
+  }
+
+  .mockup-img {
+    width: 400px;
+    margin-left: -100px;
+  }
+}
