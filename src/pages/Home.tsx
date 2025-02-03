@@ -58,7 +58,7 @@ const Home: React.FC = () => {
           alt="gif"
           style={{
             width: "100%",
-            height: "94vh",
+            height: "100vh",
             objectFit: "cover",
           }}
         />
@@ -67,7 +67,7 @@ const Home: React.FC = () => {
           alt="gif"
           style={{
             width: "100%",
-            marginTop: isMobile ? "-20px" : "-50px",
+            marginTop: isMobile ? "-20px" : "-80px",
             objectFit: "cover",
           }}
         />

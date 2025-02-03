@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from 'crypto'; // Import for random UUID generation
+import { v4 as uuidv4 } from "uuid"; // Import for random UUID generation
 
 export const getTweets = (boxDeck: number): Tweet[] => {
   const images = [
@@ -13,20 +13,28 @@ export const getTweets = (boxDeck: number): Tweet[] => {
     "https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aHVtYW58ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80",
   ];
 
-  const tweets: Tweet[] = new Array(boxDeck).fill({ images });
+  // Create unique Tweet objects with unique IDs
+  const tweets: Tweet[] = Array.from({ length: boxDeck }, (_, index) => ({
+    id: uuidv4(), // Assign a unique ID to each tweet
+    images: [...images], // Ensure each tweet has its own copy of the images array
+    direction: "", // Placeholder for direction
+    speed: 0, // Placeholder for speed
+  }));
 
-  const directionArray = ['forward', 'backward'];
+  const directionArray = ["forward", "backward"];
 
+  // Assign direction and speed based on index
   tweets.forEach((tweet, index) => {
     if (index === 0 || (index + 1) % 2 === 1) {
-      tweet.direction = 'forward';
+      tweet.direction = "forward";
       tweet.speed = 70000 + (index + 1) * 1200;
     } else if ((index + 1) % 2 === 0) {
-      tweet.direction = 'backward';
+      tweet.direction = "backward";
       tweet.speed = 75000 + (index + 1) * 1200;
     } else {
       tweet.speed = 60000;
-      tweet.direction = directionArray[Math.floor(Math.random() * directionArray.length)];
+      tweet.direction =
+        directionArray[Math.floor(Math.random() * directionArray.length)];
     }
   });
 

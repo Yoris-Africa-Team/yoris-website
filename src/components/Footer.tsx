@@ -32,7 +32,7 @@ const Footer = () => {
           "& a": {
             display: "flex",
             justifyContent: "center",
-            py: 3,
+            py: 1,
             textDecoration: "none", // Ensures no underline
             color: "inherit", // Inherits color from parent
             "&:hover": {

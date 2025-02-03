@@ -1,277 +1,218 @@
-import React, { useState, useEffect } from "react";
-import { Button, Box, Typography, IconButton, Grid, Menu } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
-import PublicIcon from "@mui/icons-material/Public";
-import MenuIcon from "@mui/icons-material/Menu";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import logo from "../../assets/images/yoris_logo.png";
+import { useDispatch } from "react-redux";
 import { toggleSideBar } from "../../features/sideBarSlice";
-import { RootState } from "../../app/store";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import { Link, useLocation } from "react-router-dom";
 
-interface MenuItem {
-  id: number;
-  name: string;
-  link: string;
-}
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Box, Button, IconButton, InputBase, Stack } from "@mui/material";
+import { ArrowDropDown, Language, Menu, Search } from "@mui/icons-material";
+import { styled, alpha } from "@mui/material/styles";
+import MyLink from "../MyLink";
+
+const StyledSearch = styled("div")(({ theme }) => ({
+  position: "relative",
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  "&:hover": {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginLeft: 0,
+  width: "100%",
+  [theme.breakpoints.up("sm")]: {
+    marginLeft: theme.spacing(1),
+    width: "auto",
+  },
+}));
+
+const SearchIconWrapper = styled("div")(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: "100%",
+  position: "absolute",
+  pointerEvents: "none",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: "inherit",
+  "& .MuiInputBase-input": {
+    padding: theme.spacing(1, 1, 1, 0),
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      width: "12ch",
+      "&:focus": {
+        width: "20ch",
+      },
+    },
+  },
+}));
 
 const Header: React.FC = () => {
-  const [isMobileView, setIsMobileView] = useState<boolean>(false);
-  const allMenuItems: MenuItem[] = [
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const currentPath = useLocation().pathname;
+
+  const [menuBtnItems, setMenuBtnItems] = useState([
     { id: 1, name: "Vendors", link: "/vendors" },
     { id: 2, name: "Riders", link: "/riders" },
-    { id: 3, name: "Customers", link: "/" }, // Including "Customers" for completeness
-  ];
+  ]);
 
-  const location = useLocation();
+  const [selectedMenuBtnItem, setSelectedMenuBtnItem] = useState({
+    id: 0,
+    name: "Customers",
+    link: "/",
+  });
+  const [showMenuButton, setShowMenuButton] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
-  const [menuBtnItems, setMenuBtnItems] = useState<MenuItem[]>(allMenuItems);
-  const [selectedMenuBtnItem, setSelectedMenuBtnItem] =
-    useState<MenuItem | null>(null);
+  const toggleMenuBtnItem = (id: number, index: number) => {
+    const currentItem = selectedMenuBtnItem;
+    const selectedItem = menuBtnItems.find((item) => item.id === id)!;
+    setSelectedMenuBtnItem(selectedItem);
+    const newMenuBtnItems = [...menuBtnItems];
+    newMenuBtnItems.splice(index, 1);
 
-  useEffect(() => {
-    // Find the current item
-    const currentItem = allMenuItems.find(
-      (item) => item.link === location.pathname
-    );
-
-    if (currentItem) {
-      setSelectedMenuBtnItem(currentItem);
-      // Set menu items excluding the selected one
-      setMenuBtnItems(
-        allMenuItems.filter((item) => item.link !== currentItem.link)
-      );
+    if (currentItem.name.toLowerCase() === "customers") {
+      newMenuBtnItems.unshift(currentItem);
+    } else {
+      newMenuBtnItems.push(currentItem);
     }
-  }, [location.pathname]);
 
-  const [showMenuButton, setShowMenuButton] = useState<boolean>(false);
-  const dispatch = useDispatch();
-
-  const toggleMenuBtnItem = (id: number) => {
-    const selectedItem = menuBtnItems.find((item) => item.id === id);
-    if (selectedItem) {
-      setSelectedMenuBtnItem(selectedItem);
-    }
-    setShowMenuButton(false);
+    setMenuBtnItems(newMenuBtnItems);
+    navigate(selectedItem.link);
   };
 
-  // Listen for screen width changes
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobileView(window.innerWidth <= 970);
-    };
-    handleResize(); // Initial check
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    if (["/vendors", "/riders"].includes(currentPath)) {
+      const selectedItem = menuBtnItems.find(
+        (item) => item.link === currentPath
+      );
+      if (selectedItem) {
+        toggleMenuBtnItem(selectedItem.id, menuBtnItems.indexOf(selectedItem));
+      }
+    }
   }, []);
 
-  return isMobileView ? (
-    // Mobile Layout
-    <Box
-      sx={{
-        width: "94%",
-        padding: "10px",
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.pageYOffset > 0);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  return (
+    <nav
+      style={{
         position: "fixed",
         top: 0,
-        zIndex: "9999",
-      }}
-    >
-      <Grid
-        container
-        spacing={2}
-        alignItems="center"
-        justifyContent="space-between"
-      >
-        {/* Left Section */}
-        <Grid item xs={1} sm={2} md={2}>
-          <Box sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <IconButton onClick={() => dispatch(toggleSideBar())}>
-              <MenuIcon sx={{ color: "primary.main" }} />
-            </IconButton>
-          </Box>
-        </Grid>
-
-        {/* Middle Section */}
-        <Grid item xs={6} sm={6} md={6} container justifyContent="center">
-          <Link to="/">
-            <Box sx={{ display: "flex", justifyContent: "center" }}>
-              <img
-                src="https://s3-alpha-sig.figma.com/img/c74f/b5d8/3d8b69fc2e12f78d672cb14e860c1582?Expires=1737936000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=bajulG~Cn0oMP5S5BJSin~ZC5VTZKFyAfvAVo6bOiiLPJ7-USRWFtbmflhXhK0tT-5kHZpa8gtPRh2e057NDUa3XhnE1CfAhSkwKDHFymOPp857Vygh0PEeTcnO6W3m8awdSX6iw8EGp3ltzI1mm5Z-bbzr3xJR9RYyqZaOfuvs9ovR5IAVKrsi~xcLQgZhNh2RiXiHJeP5Uyg222WT5KpkRgBdoNWW-n-iofxg1FqYp8~KC~VpNc~wfJ8mzFdZ~5J1R~mkIzQG3Nm5ul-~Ha05JONvoJco2MkwSXYh6wC6TOTUxYchrOfwYzEDCeytIruUP0FmbONEWbN9XVI6P~A__"
-                alt="Logo"
-                style={{ height: "50px" }}
-              />
-            </Box>
-          </Link>
-        </Grid>
-
-        {/* Right Section */}
-        <Grid
-          item
-          xs={4}
-          sm={4}
-          md={4}
-          container
-          justifyContent="flex-end"
-          alignItems="center"
-        >
-          <Box sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <IconButton
-              sx={{
-                width: "10px", // Adjust width of the button
-                height: "40px", // Adjust height of the button
-              }}
-            >
-              <SearchIcon sx={{ color: "primary.main" }} />
-            </IconButton>
-            <Button
-              sx={{
-                width: "90px",
-                height: "38px",
-                backgroundColor: "#E1C562",
-                borderRadius: "34.5px",
-                textTransform: "none",
-                "&:hover": { backgroundColor: "#d4b451" },
-              }}
-            >
-              <Typography
-                sx={{
-                  fontFamily: "'Sarala', sans-serif",
-                  fontWeight: 700,
-                  fontSize: "8px",
-                  color: "#FFFFFF",
-                }}
-              >
-                Get Started
-              </Typography>
-            </Button>
-          </Box>
-        </Grid>
-      </Grid>
-    </Box>
-  ) : (
-    // Desktop Layout
-    <Box
-      sx={{
+        zIndex: 99999,
         width: "100%",
-        padding: "10px 5%",
-        position: "fixed",
-        top: 0,
-        zIndex: "9999",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        paddingTop: "20px",
+        paddingLeft: "12px",
+        paddingRight: "12px",
+        transition: "all 0.3s",
+        boxShadow: scrolled ? "0 4px 6px rgba(0,0,0,0.1)" : "none",
       }}
     >
-      <Grid container spacing={4} alignItems="center">
-        {/* Left Section */}
-        <Grid item xs={12} sm={4} md={4}>
-          <Box
-            sx={{
-              height: "50px",
-              background: "#FFFFFF",
-              boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.05)",
-              borderRadius: "50px",
-              display: "flex",
-              justifyContent: "space-around",
-              alignItems: "center",
-              padding: "0 20px",
-              width: "300px",
-            }}
-          >
-            {["Company", "Blog", "Contacts", "FAQs", "Donate"].map(
-              (text, index) => {
-                // Define route mapping for specific items
-                const routeMap: { [key: string]: string } = {
-                  Company: "/company",
-                  Blog: "/blogs",
-                  Contacts: "/contact-us",
-                  FAQs: "/#faqs",
-                  Donate: "/donate",
-                };
-
-                return (
-                  <Link
-                    to={routeMap[text] || `/${text.toLowerCase()}`} // Default to lowercase path if not in the map
-                    key={index}
-                    style={{
-                      fontFamily: "'Sarala', sans-serif",
-                      fontWeight: 700,
-                      textDecoration: "none",
-                      fontSize: "14px",
-                      color: "#231F11",
-                      cursor: "pointer",
-                    }}
-                  >
-                    {text}
-                  </Link>
-                );
-              }
-            )}
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          padding: "8px 16px",
+          width: "100%",
+          maxWidth: "1280px",
+          backgroundColor: "rgba(195, 173, 96, 0.2)",
+          borderRadius: "12px",
+          boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+          justifyContent: "space-between",
+        }}
+      >
+        <Box sx={{ display: "flex" }}>
+          <Box sx={{ display: { xs: "block", lg: "none" } }}>
+            <IconButton
+              sx={{ color: "primary.light" }}
+              onClick={() => dispatch(toggleSideBar(true))}
+            >
+              <Menu />
+            </IconButton>
           </Box>
-        </Grid>
+          <Box sx={{ display: { xs: "none", lg: "flex" } }}>
+            <Stack
+              direction="row"
+              gap={2}
+              sx={{
+                padding: "12px 24px",
+                borderRadius: "24px",
+                color: "primary.body",
+                fontWeight: "600",
+                backgroundColor: "primary.yorisWhite",
+              }}
+            >
+              <Link to="/company">Company</Link>
+              <MyLink to="blogs">Blogs</MyLink>
+              <Link to="/contact-us">Contact Us</Link>
+              <MyLink to="faqs">FAQs</MyLink>
+              <Link to="/donate">Donate</Link>
+            </Stack>
+          </Box>
+        </Box>
 
-        {/* Middle Section */}
-        <Grid item xs={12} sm={4} md={4} container justifyContent="center">
+        <Link to="/#">
           <img
-            src="https://s3-alpha-sig.figma.com/img/c74f/b5d8/3d8b69fc2e12f78d672cb14e860c1582?Expires=1737936000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=bajulG~Cn0oMP5S5BJSin~ZC5VTZKFyAfvAVo6bOiiLPJ7-USRWFtbmflhXhK0tT-5kHZpa8gtPRh2e057NDUa3XhnE1CfAhSkwKDHFymOPp857Vygh0PEeTcnO6W3m8awdSX6iw8EGp3ltzI1mm5Z-bbzr3xJR9RYyqZaOfuvs9ovR5IAVKrsi~xcLQgZhNh2RiXiHJeP5Uyg222WT5KpkRgBdoNWW-n-iofxg1FqYp8~KC~VpNc~wfJ8mzFdZ~5J1R~mkIzQG3Nm5ul-~Ha05JONvoJco2MkwSXYh6wC6TOTUxYchrOfwYzEDCeytIruUP0FmbONEWbN9XVI6P~A__"
-            alt="Logo"
-            style={{ height: "90px" }}
+            src={logo}
+            alt="logo"
+            style={{ height: "56px", objectFit: "contain" }}
           />
-        </Grid>
+        </Link>
 
-        {/* Right Section */}
-        <Grid
-          item
-          xs={12}
-          sm={4}
-          md={2}
-          container
-          justifyContent="flex-start"
-          alignItems="center"
-        >
-          <IconButton>
-            <PublicIcon sx={{ color: "primary.main" }} />
+        <Stack direction="row" alignItems="center" gap={1}>
+          <Box sx={{ display: { xs: "none", lg: "flex" } }}>
+            <StyledSearch>
+              <SearchIconWrapper>
+                <Search />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="Search…"
+                inputProps={{ "aria-label": "search" }}
+              />
+            </StyledSearch>
+          </Box>
+          <IconButton size="small" sx={{ display: { xs: "none", lg: "flex" } }}>
+            <Language />
           </IconButton>
-          <IconButton>
-            <SearchIcon sx={{ color: "primary.main" }} />
-          </IconButton>
-        </Grid>
-        <Grid
-          item
-          xs={12}
-          sm={4}
-          md={2}
-          container
-          justifyContent="end"
-          alignItems="center"
-        >
           <Button
             sx={{
-              width: "150px",
-              height: "49px",
-              backgroundColor: "#E1C562",
-              borderRadius: "34.5px",
+              backgroundColor: "primary.light",
+              color: "primary.yorisWhite",
+              borderRadius: "20px",
+              padding: "4px 8px",
               textTransform: "none",
-              "&:hover": { backgroundColor: "#d4b451" },
+              minWidth: "80px",
             }}
           >
-            <Typography
-              sx={{
-                fontFamily: "'Sarala', sans-serif",
-                fontWeight: 700,
-                fontSize: "14px",
-                color: "#FFFFFF",
-              }}
-            >
-              Sign up
-            </Typography>
+            Sign Up
           </Button>
-        </Grid>
-      </Grid>
-      {/* Dropdown Button */}
+        </Stack>
+      </Box>
+
       <Box
         sx={{
           width: "100%",
-          marginLeft: "-10px",
-          justifyContent: "flex-end",
-          paddingTop: "2px",
+          maxWidth: "1280px",
+          display: { xs: "none", lg: "flex" },
+          justifyContent: "end",
+          paddingTop: "8px",
         }}
       >
         <Box
@@ -279,63 +220,53 @@ const Header: React.FC = () => {
             display: "flex",
             flexDirection: "column",
             alignItems: "flex-end",
-            gap: "8px",
+            gap: "12px",
           }}
           onMouseLeave={() => setShowMenuButton(false)}
+          onMouseEnter={() => setShowMenuButton(true)}
         >
           <Button
-            onMouseEnter={() => setShowMenuButton(true)}
             variant="outlined"
             size="large"
             sx={{
-              color: "#15130A",
-              backgroundColor: "#FFFFFF",
+              color: "primary.dark",
+              backgroundColor: "primary.yorisWhite",
               borderRadius: "20px",
               textTransform: "none",
               fontWeight: 600,
-              boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
-              padding: "10px 15px",
               "&:hover": {
-                color: "#FFFFFF",
+                color: "primary.yorisWhite",
                 backgroundColor: "#15130A",
               },
             }}
           >
-            {selectedMenuBtnItem ? selectedMenuBtnItem.name : "Select"}{" "}
-            <ArrowDropDownIcon />
+            {selectedMenuBtnItem.name} <ArrowDropDown />
           </Button>
           {showMenuButton &&
-            menuBtnItems.map((item) => (
-              <Link
-                to={item.link}
+            menuBtnItems.map((item, index) => (
+              <Button
                 key={item.id}
-                style={{ textDecoration: "none" }}
+                variant="outlined"
+                size="large"
+                onClick={() => toggleMenuBtnItem(item.id, index)}
+                sx={{
+                  color: "primary.dark",
+                  backgroundColor: "primary.yorisWhite",
+                  borderRadius: "20px",
+                  textTransform: "none",
+                  fontWeight: 600,
+                  "&:hover": {
+                    color: "primary.yorisWhite",
+                    backgroundColor: "#15130A",
+                  },
+                }}
               >
-                <Button
-                  variant="outlined"
-                  size="large"
-                  onClick={() => toggleMenuBtnItem(item.id)}
-                  sx={{
-                    color: "#15130A",
-                    backgroundColor: "#FFFFFF",
-                    borderRadius: "20px",
-                    textTransform: "none",
-                    fontWeight: 600,
-                    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
-                    padding: "10px 15px",
-                    "&:hover": {
-                      color: "#FFFFFF",
-                      backgroundColor: "#15130A",
-                    },
-                  }}
-                >
-                  {item.name}
-                </Button>
-              </Link>
+                {item.name}
+              </Button>
             ))}
         </Box>
       </Box>
-    </Box>
+    </nav>
   );
 };
 
