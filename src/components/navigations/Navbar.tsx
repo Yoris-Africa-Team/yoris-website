@@ -169,11 +169,7 @@ const Header: React.FC = () => {
         </Box>
 
         <Link to="/#">
-          <img
-            src={logo}
-            alt="logo"
-            style={{ height: "56px", objectFit: "contain" }}
-          />
+          <img src={logo} alt="logo" style={{ width: "150px" }} />
         </Link>
 
         <Stack direction="row" alignItems="center" gap={1}>
