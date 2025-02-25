@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { Button, useMediaQuery, useTheme } from "@mui/material";
 import { Box, Grid, Typography } from "@mui/material";
@@ -19,7 +19,6 @@ import Header from "../components/navigations/Navbar";
 const Vendors: React.FC = () => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
-  const isTabletScreen = useMediaQuery(theme.breakpoints.between("sm", "md"));
 
   return (
     <Box
@@ -87,15 +86,15 @@ const Vendors: React.FC = () => {
           >
             <Box className="flex justify-center p-2">
               <InfoCard
-                title={`Experience the Hom'Luv Magic`}
-                description={`
+                header={`Experience the Hom'Luv Magic`}
+                body={`
                   Kennys Hom'Luv Services is dedicated to providing exceptional home cleaning and
                   event planning services. Our team puts in great effort to ensure that your living
                   space is transformed into a stunning environment, while our parties are designed
                   to create unforgettable memories. Contact us today to schedule an appointment and
                   witness the remarkable transformation our services can bring to your residence.
                 `}
-                image="https://images.pexels.com/photos/1566909/pexels-photo-1566909.jpeg?auto=compress&cs=tinysrgb&w=600"
+                img="https://images.pexels.com/photos/1566909/pexels-photo-1566909.jpeg?auto=compress&cs=tinysrgb&w=600"
               />
             </Box>
           </Grid>
@@ -108,15 +107,15 @@ const Vendors: React.FC = () => {
           >
             <Box className="flex justify-center p-2">
               <InfoCard
-                title={`Experience the Hom'Luv Magic`}
-                description={`
+                header={`Experience the Hom'Luv Magic`}
+                body={`
                   Kennys Hom'Luv Services is dedicated to providing exceptional home cleaning and
                   event planning services. Our team puts in great effort to ensure that your living
                   space is transformed into a stunning environment, while our parties are designed
                   to create unforgettable memories. Contact us today to schedule an appointment and
                   witness the remarkable transformation our services can bring to your residence.
                 `}
-                image="https://images.pexels.com/photos/1566909/pexels-photo-1566909.jpeg?auto=compress&cs=tinysrgb&w=600"
+                img="https://images.pexels.com/photos/1566909/pexels-photo-1566909.jpeg?auto=compress&cs=tinysrgb&w=600"
               />
             </Box>
           </Grid>
@@ -129,15 +128,15 @@ const Vendors: React.FC = () => {
           >
             <Box className="flex justify-center p-2">
               <InfoCard
-                title={`Experience the Hom'Luv Magic`}
-                description={`
+                header={`Experience the Hom'Luv Magic`}
+                body={`
                   Kennys Hom'Luv Services is dedicated to providing exceptional home cleaning and
                   event planning services. Our team puts in great effort to ensure that your living
                   space is transformed into a stunning environment, while our parties are designed
                   to create unforgettable memories. Contact us today to schedule an appointment and
                   witness the remarkable transformation our services can bring to your residence.
                 `}
-                image="https://images.pexels.com/photos/1566909/pexels-photo-1566909.jpeg?auto=compress&cs=tinysrgb&w=600"
+                img="https://images.pexels.com/photos/1566909/pexels-photo-1566909.jpeg?auto=compress&cs=tinysrgb&w=600"
               />
             </Box>
           </Grid>

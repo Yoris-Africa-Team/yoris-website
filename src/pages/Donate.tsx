@@ -1,19 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button, Stack, useMediaQuery, useTheme } from "@mui/material";
-import { Box, Grid, Radio, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 import sdgGroup from "../assets/images/sdgs_group.png";
 import sdgCouple from "../assets/images/sdg_couple.png";
 import sdgBiodiversity from "../assets/images/sdg_biodiversity.png";
 import connectedPeople from "../assets/images/connected_people.png";
-import sdgBalance from "../assets/images/sdg_balance.png";
 import DonateBox from "../components/DonateBox";
 import Header from "../components/navigations/Navbar";
 
 const Donate: React.FC = () => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
-  const isTabletScreen = useMediaQuery(theme.breakpoints.between("sm", "md"));
 
   return (
     <Box

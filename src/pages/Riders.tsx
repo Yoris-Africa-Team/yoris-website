@@ -1,17 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 
-import { Button, Stack, useMediaQuery, useTheme } from "@mui/material";
+import { Button, useMediaQuery, useTheme } from "@mui/material";
 import { Box, Grid, Typography } from "@mui/material";
 
-import sdgBiodiversity from "../assets/images/sdg_biodiversity.png";
-import connectedPeople from "../assets/images/connected_people.png";
 import appStoreIcon from "../assets/images/appstore_icon.png";
 import playStoreIcon from "../assets/images/playstore_icon.png";
 import riders from "../assets/images/riders.png";
 import sendAndReceive1 from "../assets/images/send_and_receive_1.png";
 import sendAndReceive2 from "../assets/images/send_and_receive_2.png";
-import sendAndReceiveSVG2 from "../assets/images/send_and_receive_2.svg";
-import DonateBox from "../components/DonateBox";
 import AppDownloadBtn from "../components/Buttons/AppDownloadBtn";
 import InfoCard from "../components/cards/InfoCard";
 import RecentTweets from "../components/tweets/RecentTweets";
@@ -23,7 +19,6 @@ import Header from "../components/navigations/Navbar";
 const Riders: React.FC = () => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
-  const isTabletScreen = useMediaQuery(theme.breakpoints.between("sm", "md"));
 
   return (
     <Box
@@ -101,13 +96,13 @@ const Riders: React.FC = () => {
                 className="flex justify-center font-sarala px-6 md:px-4"
               >
                 <InfoCard
-                  title="Book an Event"
-                  description={`
+                  header="Book an Event"
+                  body={`
                       Love to Puddle? Stay up to date on our social
                       media section of the app as you get updates from
                       brands and individuals concerning their product.
                   `}
-                  image="https://images.pexels.com/photos/1566909/pexels-photo-1566909.jpeg?auto=compress&cs=tinysrgb&w=600"
+                  img="https://images.pexels.com/photos/1566909/pexels-photo-1566909.jpeg?auto=compress&cs=tinysrgb&w=600"
                 />
               </Grid>
               <Grid
@@ -119,13 +114,13 @@ const Riders: React.FC = () => {
                 className="flex justify-center font-sarala px-6 md:px-4"
               >
                 <InfoCard
-                  title="Book an Event"
-                  description={`
+                  header="Book an Event"
+                  body={`
                       Love to Puddle? Stay up to date on our social
                       media section of the app as you get updates from
                       brands and individuals concerning their product.
                   `}
-                  image="https://images.pexels.com/photos/1566909/pexels-photo-1566909.jpeg?auto=compress&cs=tinysrgb&w=600"
+                  img="https://images.pexels.com/photos/1566909/pexels-photo-1566909.jpeg?auto=compress&cs=tinysrgb&w=600"
                 />
               </Grid>
               <Grid
@@ -137,13 +132,13 @@ const Riders: React.FC = () => {
                 className="flex justify-center font-sarala px-6 md:px-4"
               >
                 <InfoCard
-                  title="Book an Event"
-                  description={`
+                  header="Book an Event"
+                  body={`
                       Love to Puddle? Stay up to date on our social
                       media section of the app as you get updates from
                       brands and individuals concerning their product.
                   `}
-                  image="https://images.pexels.com/photos/1566909/pexels-photo-1566909.jpeg?auto=compress&cs=tinysrgb&w=600"
+                  img="https://images.pexels.com/photos/1566909/pexels-photo-1566909.jpeg?auto=compress&cs=tinysrgb&w=600"
                 />
               </Grid>
               <Grid
@@ -155,13 +150,13 @@ const Riders: React.FC = () => {
                 className="flex justify-center font-sarala px-6 md:px-4"
               >
                 <InfoCard
-                  title="Book an Event"
-                  description={`
+                  header="Book an Event"
+                  body={`
                       Love to Puddle? Stay up to date on our social
                       media section of the app as you get updates from
                       brands and individuals concerning their product.
                   `}
-                  image="https://images.pexels.com/photos/1566909/pexels-photo-1566909.jpeg?auto=compress&cs=tinysrgb&w=600"
+                  img="https://images.pexels.com/photos/1566909/pexels-photo-1566909.jpeg?auto=compress&cs=tinysrgb&w=600"
                 />
               </Grid>
             </Grid>

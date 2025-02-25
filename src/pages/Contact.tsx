@@ -1,11 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   Avatar,
   Button,
   IconButton,
-  Input,
   Stack,
-  TextField,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
@@ -49,7 +47,6 @@ const BaseAvatar: React.FC<BaseAvatarProps> = ({ src }) => {
 const Donate: React.FC = () => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
-  const isTabletScreen = useMediaQuery(theme.breakpoints.up("md"));
 
   return (
     <Box

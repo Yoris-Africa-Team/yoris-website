@@ -1,17 +1,12 @@
 import React, { useState, useEffect } from "react";
 import {
   Box,
-  Card,
-  CardContent,
-  CardMedia,
-  Stack,
   Typography,
   Grid,
-  Button,
 } from "@mui/material";
 import "../styles/Home.css";
 import Header from "../components/navigations/Navbar";
-import CarouselComponent from "../components/carousel/Carousel.tsx";
+import CarouselComponent from "../components/carousel/Carousel";
 import FAQs from "../components/Faqs";
 import RecentTweets from "../components/tweets/RecentTweets";
 import RecentBlogs from "../components/blog/RecentBlogs";
@@ -26,263 +21,84 @@ import InfoCard from "../components/cards/InfoCard";
 import introBg from "../assets/images/intro_bg.svg";
 
 const useBreakpoint = () => {
-  const [isMobile, setIsMobile] = useState(false);
-  const [isTablet, setIsTablet] = useState(false);
-  const [isLaptop, setIsLaptop] = useState(false);
-  const [isDesktop, setIsDesktop] = useState(false);
-  const [isWide, setIsWide] = useState(false);
+  const [width, setWidth] = useState<number>(window.innerWidth);
 
   useEffect(() => {
-    const handleResize = () => {
-      const width = window.innerWidth;
-
-      setIsMobile(width < 672);
-      setIsTablet(width >= 500 && width < 992);
-      setIsLaptop(width >= 992 && width < 1200);
-      setIsDesktop(width >= 1200 && width < 1920);
-      setIsWide(width >= 1920);
-    };
-
-    handleResize(); // Initial check
-
+    const handleResize = () => setWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
-
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  return { isMobile, isTablet, isLaptop, isDesktop, isWide };
+  return {
+    isMobile: width < 672,
+    isTablet: width >= 500 && width < 992,
+    isLaptop: width >= 992 && width < 1200,
+    isDesktop: width >= 1200 && width < 1920,
+    isWide: width >= 1920,
+  };
 };
 
 const Home: React.FC = () => {
   const { isMobile, isTablet, isLaptop, isDesktop, isWide } = useBreakpoint();
 
-  const getMarginTop = () => {
-    if (isMobile) {
-      return "-20px";
-    } else if (isTablet) {
-      return "-60px"; // Example for tablet
-    } else if (isLaptop) {
-      return "-60px"; // Example for laptop
-    } else if (isDesktop) {
-      return "-80px";
-    } else if (isWide) {
-      return "-100px"; // Example for wide screens
-    } else {
-      return "-80px"; // Default value (optional)
-    }
+  const getMarginTop = (): string => {
+    if (isMobile) return "-20px";
+    if (isTablet || isLaptop) return "-60px";
+    if (isDesktop) return "-80px";
+    if (isWide) return "-100px";
+    return "-80px";
   };
-
-  const marginTop = getMarginTop();
 
   return (
     <>
       <Header />
-      <Box
-        sx={{
-          position: "relative",
-          width: "100%",
-          height: "100vh",
-        }}
-      >
-        <img
-          src={introBg}
-          alt="gif"
-          style={{
-            width: "100%",
-            height: "100vh",
-            objectFit: "cover",
-          }}
-        />
-        <img
-          src={bottomImg}
-          alt="gif"
-          style={{
-            width: "100%",
-            marginTop: marginTop,
-            objectFit: "cover",
-          }}
-        />
+      <Box sx={{ position: "relative", width: "100%", height: "100vh" }}>
+        <img src={introBg} alt="Intro Background" style={{ width: "100%", height: "100vh", objectFit: "cover" }} />
+        <img src={bottomImg} alt="Bottom Image" style={{ width: "100%", marginTop: getMarginTop(), objectFit: "cover" }} />
       </Box>
-      <Box
-        className="mt-5"
-        sx={{
-          position: "relative",
-          width: "100%",
-        }}
-      >
-        <Typography
-          component="h3"
-          sx={{
-            fontWeight: 600,
-            color: "primary.yorisWhite",
-            fontSize: "2.3vw",
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
+      <Box sx={{ position: "relative", width: "100%", textAlign: "center", marginTop: "20px" }}>
+        <Typography component="h3" sx={{ fontWeight: 600, color: "primary.yorisWhite", fontSize: "2.3vw" }}>
           Check us on Playstore?
         </Typography>
-        <Typography
-          component="h3"
-          sx={{
-            fontWeight: 600,
-            color: "primary.yorisWhite",
-            fontSize: "2.3vw",
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
+        <Typography component="h3" sx={{ fontWeight: 600, color: "primary.yorisWhite", fontSize: "2.3vw" }}>
           Use our App
         </Typography>
-        <Grid
-          container
-          justifyContent="center"
-          alignItems="center"
-          sx={{ marginTop: "30px" }}
-        >
+        <Grid container justifyContent="center" alignItems="center" sx={{ marginTop: "30px" }}>
           <Grid item>
-            <AppDownloadBtn
-              text="Download on Playstore"
-              icon={
-                <img
-                  src={playstoreIcon}
-                  alt="App Icon"
-                  className="responsive-icon"
-                />
-              }
-              style={{ marginRight: "30px" }} // Fixed style prop
-            />
+            <AppDownloadBtn text="Download on Playstore" icon={<img src={playstoreIcon} alt="Playstore Icon" />} style={{ marginRight: "30px" }} />
           </Grid>
           <Grid item>
-            <AppDownloadBtn
-              text="Download on Appstore"
-              icon={
-                <img
-                  src={appstoreIcon}
-                  alt="App Icon"
-                  className="responsive-icon"
-                />
-              }
-            />
+            <AppDownloadBtn text="Download on Appstore" icon={<img src={appstoreIcon} alt="Appstore Icon" />} />
           </Grid>
         </Grid>
       </Box>
-      <Box
-        sx={{
-          position: "relative",
-          marginTop: "-30px",
-          width: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <img src={iphoneImg} className="mockup-img" />
+      <Box sx={{ position: "relative", marginTop: "-30px", width: "100%", display: "flex", justifyContent: "center" }}>
+        <img src={iphoneImg} alt="iPhone Mockup" className="mockup-img" />
       </Box>
-
       <div className="grid-container">
-        <InfoCard
-          header="Join the conversation"
-          body={`
-                            Love to meet new people and stay connected with loved ones as well?
-                            Join our growing online community to never miss out on the latest
-                            updates from individuals and your favourite brands
-                        `}
-          img="https://images.pexels.com/photos/1415734/pexels-photo-1415734.jpeg?auto=compress&cs=tinysrgb&w=600"
-          link=""
-        />
-        <InfoCard
-          header="Book an Event"
-          body={`
-                            Say no more to long lines and the frustration of buffering web pages.
-                            When it comes to buying tickets, booking events and saving a place for
-                            yourself at your favourite events, we have got you covered
-                        `}
-          img="https://images.pexels.com/photos/1566909/pexels-photo-1566909.jpeg?auto=compress&cs=tinysrgb&w=600"
-          link=""
-        />
-        <InfoCard
-          header="An Africa Store"
-          body={`
-                            What is better than an app you use everyday? An app that lets you
-                            shop and meet service providers easily. Get every commodity, goods,
-                            and services with ease
-                        `}
-          img="https://images.pexels.com/photos/1090972/pexels-photo-1090972.jpeg?auto=compress&cs=tinysrgb&w=600"
-          link=""
-        />
+        <InfoCard header="Join the conversation" body="Love to meet new people and stay connected? Join our online community." img="https://images.pexels.com/photos/1415734/pexels-photo-1415734.jpeg?auto=compress&cs=tinysrgb&w=600" />
+        <InfoCard header="Book an Event" body="No more long lines! Book tickets and events easily." img="https://images.pexels.com/photos/1566909/pexels-photo-1566909.jpeg?auto=compress&cs=tinysrgb&w=600"  />
+        <InfoCard header="An Africa Store" body="Shop and meet service providers easily." img="https://images.pexels.com/photos/1090972/pexels-photo-1090972.jpeg?auto=compress&cs=tinysrgb&w=600"  />
       </div>
-      <Box
-        sx={{
-          position: "relative",
-          marginTop: "70px",
-          width: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
+      <Box sx={{ position: "relative", marginTop: "70px", width: "100%", display: "flex", justifyContent: "center" }}>
         <CarouselComponent />
       </Box>
-      <RecentBlogs blogDetails={getBlogs()} />
-      <Box
-        style={{
-          width: "100%",
-          borderTop: "2px dashed #6b38a5",
-          borderBottom: "2px dashed #6b38a5",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            textAlign: "start",
-            marginTop: "2rem",
-            width: "100%",
-          }}
-          id="recent-tweets"
-        >
-          <Typography
-            variant="h4"
-            style={{
-              width: "100%",
-              maxWidth: "112rem",
-              paddingLeft: "1.25rem",
-              paddingRight: "1.25rem",
-              color: "primary.yorisWhite",
-            }}
-          >
+      <RecentBlogs blogDetails={getBlogs(3)} />
+      <Box sx={{ width: "100%", borderTop: "2px dashed #6b38a5", borderBottom: "2px dashed #6b38a5" }}>
+        <Box sx={{ display: "flex", justifyContent: "center", textAlign: "start", marginTop: "2rem", width: "100%" }} id="recent-tweets">
+          <Typography variant="h4" sx={{ width: "100%", maxWidth: "112rem", paddingX: "1.25rem", color: "primary.yorisWhite" }}>
             Recent Tweets
           </Typography>
-        </div>
+        </Box>
         <RecentTweets tweetDetails={getTweets(2)} />
       </Box>
-
-      <Box
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          textAlign: "left",
-          paddingBlock: "2rem", // py-8
-          backgroundColor: "#15130A",
-        }}
-        id="faqs"
-      >
-        <Typography
-          variant="h4"
-          style={{
-            padding: "1rem", // px-5
-            color: "primary.yorisWhite",
-            fontFamily: "Sarala",
-          }}
-        >
+      <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "left", paddingBlock: "2rem", backgroundColor: "#15130A" }} id="faqs">
+        <Typography variant="h4" sx={{ padding: "1rem", color: "primary.yorisWhite", fontFamily: "Sarala" }}>
           FAQs
         </Typography>
-        <Box style={{ width: "100%", maxWidth: "72rem", overflowX: "hidden" }}>
+        <Box sx={{ width: "100%", maxWidth: "72rem", overflowX: "hidden" }}>
           <FAQs />
-        </Box>{" "}
-        {/* max-w-6xl (6 * 128px / 16px per rem = 48rem. I have used 72 rem for better responsiveness) */}
+        </Box>
       </Box>
     </>
   );

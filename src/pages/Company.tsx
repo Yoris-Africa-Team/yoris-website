@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import "../styles/Company.css";
 import { useMediaQuery, useTheme } from "@mui/material";
 import { Box, Grid, Radio, Typography } from "@mui/material";
-import bottomImg from "../assets/images/bottom_img.png";
 import CoreValues from "../components/coreValues/CoreValues";
 import { Stack } from "@mui/system";
 import TeamMember from "../components/cards/TeamMember";
@@ -80,7 +79,7 @@ const Company: React.FC = () => {
     setTeamWithDept(newTeamWithDept);
   };
 
-  const [selectedTeamMembers, setSelectedTeamMembers] = useState<
+  const [selectedTeamMembers] = useState<
     TeamMemberDetails[]
   >([
     {

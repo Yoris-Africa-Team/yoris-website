@@ -1,58 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 
-import {
-  Avatar,
-  Button,
-  IconButton,
-  Input,
-  List,
-  ListItem,
-  Stack,
-  TextField,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
 import { Box, Typography } from "@mui/material";
-import {
-  ArrowForward,
-  FacebookOutlined,
-  Instagram,
-  LocalPhone,
-  LocationOn,
-  Twitter,
-} from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import Header from "../components/navigations/Navbar";
 
-interface BaseAvatarProps {
-  src: string;
-}
 
-const BaseAvatar: React.FC<BaseAvatarProps> = ({ src }) => {
-  return (
-    <Avatar
-      alt="Remy Sharp"
-      src={src}
-      sx={{
-        width: {
-          xs: 30,
-          sm: 34,
-          md: 40,
-        },
-        height: {
-          xs: 30,
-          sm: 34,
-          md: 40,
-        },
-      }}
-    />
-  );
-};
 
 const PrivacyPolicy: React.FC = () => {
-  const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
-  const isTabletScreen = useMediaQuery(theme.breakpoints.up("md"));
 
   return (
     <Box
