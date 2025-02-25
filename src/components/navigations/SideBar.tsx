@@ -28,7 +28,7 @@ interface SidebarState {
 
 const SideBar: React.FC = () => {
   const dispatch = useDispatch();
-  const isTabletDevice = useMediaQuery("(max-width: 1024px)");
+  const isTabletDevice = useMediaQuery("(max-width: 1199px)");
   const isOpen = useSelector((state: any) => state.sidebar.isOpen); // Fix selector
   const currentRoute = useLocation();
 

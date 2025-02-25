@@ -34,7 +34,7 @@ const FAQs = () => {
       style={{ gap: "1.25rem", padding: "1rem", overflow: "hidden" }}
     >
       <Box style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-        <Box sx={{ borderRadius: "15px" }}>
+        <Box sx={{ borderRadius: "15px", overflow: "hidden" }}>
           <Accordion sx={{ backgroundColor: "#fffefc" }}>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}

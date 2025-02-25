@@ -21,7 +21,7 @@ const AppDownloadBtn: React.FC<AppDownloadBtnProps> = ({
         height: { xs: "40px", sm: "50px", md: "60px" },
         fontSize: { xs: "5px", sm: "10px", md: "15px" },
         backgroundColor: "#080604",
-        borderRadius: "15px",
+        borderRadius: "5px",
         color: "white",
         textTransform: "none", // Prevents uppercase transformation
         display: "flex",

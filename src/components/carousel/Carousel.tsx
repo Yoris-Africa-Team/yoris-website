@@ -155,11 +155,11 @@ const CarouselComponent: React.FC = () => {
           >
             <img
               src={hotelImg}
-              width={"450px"}
               style={{
                 position: "relative",
                 left: "5%",
                 top: "5%",
+                width: "80vw",
               }}
             />
           </Box>
@@ -235,7 +235,7 @@ const CarouselComponent: React.FC = () => {
       ) : (
         <Box
           sx={{
-            width: "300px",
+            width: "90vw",
             height: "400px",
             maxWidth: "800px",
             margin: "0 auto",
@@ -249,7 +249,7 @@ const CarouselComponent: React.FC = () => {
           <CustomArrow1
             sx={{
               top: "calc(50% - 100px)",
-              left: "70px",
+              left: "28vw",
               transform: "translateY(-50%)",
             }}
             onClick={handlePrev}
@@ -260,7 +260,7 @@ const CarouselComponent: React.FC = () => {
           <CustomArrow1
             sx={{
               top: "calc(50% - 100px)",
-              right: "-90px",
+              right: "-35vw",
               transform: "translateY(-50%)",
             }}
             onClick={handleNext}
