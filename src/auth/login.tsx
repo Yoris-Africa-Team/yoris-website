@@ -1,4 +1,5 @@
 import { useState } from "react";
+import logo from '../assets/images/yoris_logo.png';
 
 const Login = () => {
   const [step, setStep] = useState(1);
@@ -12,7 +13,7 @@ const Login = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-[#1D1A15] text-gold">
-      <h1 className="text-3xl font-bold mb-6">YORIS</h1>
+      <img src={logo} alt="Yoris Logo" className="" />
       {step === 1 && (
         <div className="w-80 flex flex-col space-y-4 p-6 ">
           <label className="text-sm">Country</label>
@@ -29,7 +30,9 @@ const Login = () => {
         </div>
       )}
       {step === 2 && (
+        
         <div className="w-80 flex flex-col space-y-4 p-6 ">
+        
           <label className="text-sm">Email</label>
           <input 
             type="email" 
