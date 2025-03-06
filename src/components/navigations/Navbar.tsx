@@ -196,8 +196,10 @@ const Header: React.FC = () => {
               textTransform: "none",
               minWidth: "80px",
             }}
+
+            onClick={() => navigate("/auth/login")}
           >
-            Sign Up
+            Log in
           </Button>
         </Stack>
       </Box>

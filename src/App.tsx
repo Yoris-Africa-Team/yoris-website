@@ -10,6 +10,8 @@ import Vendors from "./pages/Vendors";
 import Riders from "./pages/Riders";
 import SideBar from "./components/navigations/SideBar";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import QRLogin from "./auth/Qr-code";
+import Login from "./auth/login";
 
 const theme = createTheme({
   palette: {
@@ -60,6 +62,8 @@ const router = [
       { path: "/vendors", element: <Vendors /> },
       { path: "/riders", element: <Riders /> },
       { path: "/privacy-policy", element: <PrivacyPolicy /> },
+      {path: "/auth/qr-login", element: <QRLogin />},
+      {path: "/auth/login", element: <Login />},
       // { path: '/home', element: home },
     ],
   },
